@@ -1,0 +1,1 @@
+Simple ToDo app: add tasks to a ToDo list, delete and edit them, check them off or on. 
