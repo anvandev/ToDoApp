@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="POST" class="d-flex">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Add Task" aria-label="Search" name="name">
+        <button class="btn btn-outline-success" type="submit">Add Task </button>
+    </form>
+
+    <br>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <br>
+
+    {% if all_tasks %}
+        <table class="table table-bordered">
+        {% for task in all_tasks %}
+            {% if task.completed %}
+                <tr class="table-secondary">
+                    <td class="striker">{{ task.name }}</td>
+                    <td><center><a href="{% url 'uncross_task' task_pk=task.pk %}">Uncross</a></center></td>
+                    <td><center><a href="{% url 'delete_task' task_pk=task.pk %}">Delete</a></center></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td><center><a href="{% url 'cross_off_task' task_pk=task.pk %}">Cross off</a></center></td>
+                    <td><center><a href="{% url 'delete_task' task_pk=task.pk %}">Delete</a></center></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}
