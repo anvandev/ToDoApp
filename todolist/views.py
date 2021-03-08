@@ -39,3 +39,20 @@ def uncross_task(request, task_pk):
     task.completed = False
     task.save()
     return redirect('home_todolist')
+
+
+def edit_task(request, task_pk):
+    task = get_object_or_404(Task, pk=task_pk)
+    if request.method == "POST":
+        form = TaskForm(request.POST or None, instance=task)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.author = request.user
+            form.save()
+            return redirect('home_todolist')
+    else:
+        return render(request, 'todolist/edit.html', {'task': task})
+
+
+def about_page(request):
+    return render(request, 'todolist/about.html')

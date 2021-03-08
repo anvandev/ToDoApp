@@ -1,44 +1,77 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-    <form method="POST" class="d-flex">
-        {% csrf_token %}
-        <input class="form-control me-2" type="search" placeholder="Add Task" aria-label="Search" name="name">
-        <button class="btn btn-outline-success" type="submit">Add Task </button>
-    </form>
+    {% if user.is_authenticated %}
 
-    <br>
+        <form method="POST" class="d-flex">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Add Task" aria-label="Search" name="name">
+            <button class="btn btn-outline-success" type="submit">Add Task </button>
+        </form>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    {% endif %}
+        <br>
 
-    <br>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    {% if all_tasks %}
-        <table class="table table-bordered">
-        {% for task in all_tasks %}
-            {% if task.completed %}
-                <tr class="table-secondary">
-                    <td class="striker">{{ task.name }}</td>
-                    <td><center><a href="{% url 'uncross_task' task_pk=task.pk %}">Uncross</a></center></td>
-                    <td><center><a href="{% url 'delete_task' task_pk=task.pk %}">Delete</a></center></td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td>{{ task.name }}</td>
-                    <td><center><a href="{% url 'cross_off_task' task_pk=task.pk %}">Cross off</a></center></td>
-                    <td><center><a href="{% url 'delete_task' task_pk=task.pk %}">Delete</a></center></td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </table>
-    {% endif %}
+        <br>
 
+        {% if all_tasks %}
+            <table class="table table-bordered">
+            {% for task in all_tasks %}
+                {% if task.completed %}
+                    <tr>
+                        <td class="striker"><a class="completed_task" href="{% url 'edit_task' task_pk=task.pk %}">
+                            <i class="fas fa-pencil-alt"></i></a> &nbsp {{ task.name }}
+                        </td>
+                        <td>
+                            <center><a class="completed_task" href="{% url 'uncross_task' task_pk=task.pk %}">
+                                <i class="fas fa-undo-alt"></i>  Uncross</a></center>
+                        </td>
+                        <td>
+                            <center><a class="completed_task" href="{% url 'delete_task' task_pk=task.pk %}">
+                                <i class="fas fa-trash-alt"></i></a></center>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td><a class="uncompleted_task" href="{% url 'edit_task' task_pk=task.pk %}">
+                            <i class="fas fa-pencil-alt"></i></a> &nbsp {{ task.name }}
+                        </td>
+                        <td>
+                            <center><a class="uncompleted_task" href="{% url 'cross_off_task' task_pk=task.pk %}">
+                                <i class="fas fa-check"></i> Cross off</a></center>
+                        </td>
+                        <td>
+                            <center><a class="uncompleted_task" href="{% url 'delete_task' task_pk=task.pk %}">
+                                <i class="fas fa-trash-alt"></i></a></center>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </table>
+        {% endif %}
+
+    {% else %}
+
+        <p> Hello there! </p>
+        <p> With this minimalistic to-do app, you can create your task list,
+            cross off completed tasks or delete them.
+        </p>
+        <p><img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;"></p>
+        <br>
+        <p style="color: #19865C">
+            <strong>To use this app please go through simple registration (without email confirmation).</strong>
+        </p>
+
+
+    {% endif%}
 {% endblock %}

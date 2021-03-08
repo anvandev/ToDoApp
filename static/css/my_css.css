@@ -1,3 +1,25 @@
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: #666666;
+}
+
+p {
+    font-size: 18px;
+}
+
+
 .striker {
     text-decoration: line-through;
+    color: lightgray;
+}
+
+.completed_task {
+    color: lightgrey;
+}
+
+.uncompleted_task {
+    color: #222222;
 }

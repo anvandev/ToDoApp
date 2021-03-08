@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <p> Hello there! </p>
+    <p> With this minimalistic to-do app, you can create your task list,
+        cross off completed tasks or delete them.
+    </p>
+    <img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;">
+    <br><br>
+    <p style="color: #19865C">
+        <strong>To use this app please go through simple registration (without email confirmation).</strong>
+    </p>
+
+{% endblock %}
