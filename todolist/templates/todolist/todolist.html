@@ -61,17 +61,17 @@
         {% endif %}
 
     {% else %}
-
+        <br>
         <p> Hello there! </p>
         <p> With this minimalistic to-do app, you can create your task list,
-            cross off completed tasks or delete them.
+            edit tasks, cross off completed tasks or delete them.
         </p>
         <p><img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;"></p>
-        <br>
-        <p style="color: #19865C">
-            <strong>To use this app please go through simple registration (without email confirmation).</strong>
-        </p>
-
-
+        <br><br>
+        <div class="alert alert-warning" style="width: 700px; color: black">
+            To use this app please go through simple registration (without email confirmation).
+            <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+        </div>
     {% endif%}
+
 {% endblock %}

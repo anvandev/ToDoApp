@@ -6,18 +6,18 @@ from .forms import TaskForm
 
 def home_todolist(request):
     """Create task and return homepage with todolist"""
-    if request.method == "POST":
-        form = TaskForm(request.POST or None)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.author = request.user
-            task.save()
-            all_tasks = Task.objects.all
-            messages.success(request, 'Task has been added to list!')
-            return render(request, 'todolist/todolist.html', {'all_tasks': all_tasks})
+    if request.user.is_authenticated:
+        all_tasks = Task.objects.filter(author=request.user)
+        if request.method == "POST":
+            form = TaskForm(request.POST or None)
+            if form.is_valid():
+                task = form.save(commit=False)
+                task.author = request.user
+                task.save()
+                messages.success(request, 'Task has been added to list!')
     else:
-        all_tasks = Task.objects.all
-        return render(request, 'todolist/todolist.html', {'all_tasks': all_tasks})
+        all_tasks = None
+    return render(request, 'todolist/todolist.html', {'all_tasks': all_tasks})
 
 
 def delete_task(request, task_pk):

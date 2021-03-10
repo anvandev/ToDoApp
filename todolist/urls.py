@@ -8,5 +8,4 @@ urlpatterns = [
     path('uncross/<int:task_pk>/', views.uncross_task, name='uncross_task'),
     path('edit/<int:task_pk>/', views.edit_task, name='edit_task'),
     path('about/', views.about_page, name='about_page'),
-
 ]
