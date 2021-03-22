@@ -2,76 +2,76 @@
 {% load static %}
 
 {% block content %}
-
     {% if user.is_authenticated %}
-
+      <div class="col-md-8">
         <form method="POST" class="d-flex">
-            {% csrf_token %}
-            <input class="form-control me-2" type="search" placeholder="Add Task" aria-label="Search" name="name">
-            <button class="btn btn-outline-success" type="submit">Add Task </button>
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Add Task" aria-label="Search" name="name">
+          <button class="btn btn-outline-success" type="submit">Add Task</button>
         </form>
+      </div>
 
-        <br>
+      {% if messages %}
+        <div class="col-md-8">
+          {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ message }} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        <br>
-
-        {% if all_tasks %}
-            <table class="table table-bordered">
+      {% if all_tasks %}
+        <div class="col-md-8">
+          <table class="table table-bordered">
             {% for task in all_tasks %}
-                {% if task.completed %}
-                    <tr>
-                        <td class="striker"><a class="completed_task" href="{% url 'edit_task' task_pk=task.pk %}">
-                            <i class="fas fa-pencil-alt"></i></a> &nbsp {{ task.name }}
-                        </td>
-                        <td>
-                            <center><a class="completed_task" href="{% url 'uncross_task' task_pk=task.pk %}">
-                                <i class="fas fa-undo-alt"></i>  Uncross</a></center>
-                        </td>
-                        <td>
-                            <center><a class="completed_task" href="{% url 'delete_task' task_pk=task.pk %}">
-                                <i class="fas fa-trash-alt"></i></a></center>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td><a class="uncompleted_task" href="{% url 'edit_task' task_pk=task.pk %}">
-                            <i class="fas fa-pencil-alt"></i></a> &nbsp {{ task.name }}
-                        </td>
-                        <td>
-                            <center><a class="uncompleted_task" href="{% url 'cross_off_task' task_pk=task.pk %}">
-                                <i class="fas fa-check"></i> Cross off</a></center>
-                        </td>
-                        <td>
-                            <center><a class="uncompleted_task" href="{% url 'delete_task' task_pk=task.pk %}">
-                                <i class="fas fa-trash-alt"></i></a></center>
-                        </td>
-                    </tr>
-                {% endif %}
+              {% if task.completed %}
+                <tr>
+                  <td class="striker text-break">
+                      <a class="completed_task" href="{% url 'edit_task' task_pk=task.pk %}">
+                          <i class="fas fa-pencil-alt"></i></a> &nbsp {{ task.name }}
+                  </td>
+                  <td>
+                    <center><a class="completed_task" href="{% url 'uncross_task' task_pk=task.pk %}">
+                        <i class="fas fa-undo-alt"></i> Uncross</a></center>
+                  </td>
+                  <td>
+                    <center><a class="completed_task" href="{% url 'delete_task' task_pk=task.pk %}">
+                        <i class="fas fa-trash-alt"></i></a></center>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td class="text-break">
+                      <a class="uncompleted_task" href="{% url 'edit_task' task_pk=task.pk %}">
+                    <i class="fas fa-pencil-alt"></i></a> &nbsp {{ task.name }}
+                  </td>
+                  <td>
+                    <center><a class="uncompleted_task" href="{% url 'cross_off_task' task_pk=task.pk %}">
+                        <i class="fas fa-check"></i> Cross&nbspoff</a></center>
+                  </td>
+                  <td>
+                    <center><a class="uncompleted_task" href="{% url 'delete_task' task_pk=task.pk %}">
+                        <i class="fas fa-trash-alt"></i></a></center>
+                  </td>
+                </tr>
+              {% endif %}
             {% endfor %}
-            </table>
-        {% endif %}
+          </table>
+        </div>
+      {% endif %}
 
     {% else %}
-        <br>
-        <p> Hello there! </p>
-        <p> With this minimalistic to-do app, you can create your task list,
-            edit tasks, cross off completed tasks or delete them.
-        </p>
-        <p><img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;"></p>
-        <br><br>
-        <div class="alert alert-warning" style="width: 700px; color: black">
-            To use this app please go through simple registration (without email confirmation).
-            <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+      <div class="col-md-8">
+        <p>Hello there!<br>With this minimalistic to-do app, you can create your task list,
+            edit tasks, cross off completed tasks or delete them.</p>
+        <img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;">
+      </div>
+      <div class="col-md-8">
+        <div class="alert alert-warning" style="display: inline-block; color: black">
+          To use this app please go through simple registration (without email confirmation).&nbsp
+          <a class="ml-2" href="{% url 'register' %}">Sign&nbspUp</a>
         </div>
+      </div>
     {% endif%}
-
 {% endblock %}

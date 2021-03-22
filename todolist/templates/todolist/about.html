@@ -2,17 +2,16 @@
 {% load static %}
 
 {% block content %}
-
-    <br>
-    <p> Hello there! </p>
-    <p> With this minimalistic to-do app, you can create your task list,
-        edit tasks, cross off completed tasks or delete them.
-    </p>
-    <img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;">
-    <br><br><br><br>
-    <div class="alert alert-warning" style="width: 700px; color: black">
-        To use this app please go through simple registration (without email confirmation).
-        <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+    <div class="col-md-8">
+      <p>Hello there!<br>With this minimalistic to-do app, you can create your task list,
+            edit tasks, cross off completed tasks or delete them.
+      </p>
+      <img src="{% static 'img/img1.png' %}" style="max-width:85%; border:1px solid lightgray;">
     </div>
-
+    <div class="col-md-8">
+      <div class="alert alert-warning" style="display: inline-block; color: black">
+        To use this app please go through simple registration (without email confirmation).&nbsp
+        <a class="ml-2" href="{% url 'register' %}">Sign&nbspUp</a>
+      </div>
+    </div>
 {% endblock %}
